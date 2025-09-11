@@ -1,9 +1,13 @@
 import React from "react";
 import { Metadata } from "next";
-
+export const dynamicParams = false
 type Props = {
   params: Promise<{ productId: string }>;
 };
+
+export async function generateStaticParams() {
+  return [{ productId: '1' }, { productId: '2' }, { productId: '3' }];
+}
 
 export const generateMetadata = async ({
   params,
@@ -18,14 +22,14 @@ export const generateMetadata = async ({
 const ProductDescription = async ({
   params,
 }: {
-  params: Promise<{ productId: string; reviewId: string }>;
+  params: Promise<{ productId: string;}>;
 }) => {
-  const { productId, reviewId } = await params;
+  const { productId } = await params;
 
   if (productId >= "0") {
     return (
       <h1>
-        You are viewing review {reviewId} of product {productId}{" "}
+        You are viewing  product {productId}
       </h1>
     );
   }
