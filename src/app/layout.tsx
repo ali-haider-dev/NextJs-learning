@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import "./globals.css";
 import ErrorWrapper from "./error-wrapper";
+import { ThemeProvider } from "@/components/themeProvider";
 export const metadata: Metadata = {
   title: {
     default: "Layout Meta Title ",
@@ -16,9 +17,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased`}>
-        <ErrorWrapper>{children}</ErrorWrapper>
-      </body>
+      <ThemeProvider>
+        <body className={`antialiased`}>
+          <ErrorWrapper>{children}</ErrorWrapper>
+        </body>
+      </ThemeProvider>
     </html>
   );
 }
