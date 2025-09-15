@@ -1,18 +1,21 @@
-"use client"
+"use client";
 import { useActionState } from "react";
-import { FormState,createProduct } from "@/actions/product";
+import { FormState, editProduct } from "@/actions/product";
+import { Product } from "../page";
 // import SubmitButton from "@/components/submit";
 
-export default function AddProductPage() {
+export default function EditProductForm({product}:{product:Product}) {
+
   const initialState: FormState = {
     errors: {},
   };
 
+  const productWithId = editProduct.bind(null,product.id)
+
   const [state, formAction, isPending] = useActionState(
-    createProduct,
+    productWithId,
     initialState
   );
-
 
   return (
     <form action={formAction} className="p-4 space-y-4 max-w-96">
@@ -23,11 +26,14 @@ export default function AddProductPage() {
             type="text"
             className="block w-full p-2 text-black border rounded"
             name="title"
+            defaultValue={product.title}
           />
         </label>
         {state.errors.title ? (
           <p className="text-red-500">{state.errors.title}</p>
-        ):""}
+        ) : (
+          ""
+        )}
       </div>
       <div>
         <label className="text-black">
@@ -36,11 +42,15 @@ export default function AddProductPage() {
             type="number"
             className="block w-full p-2 text-black border rounded"
             name="price"
+            defaultValue={product.price}
+
           />
         </label>
         {state.errors.price ? (
           <p className="text-red-500 ">{state.errors.price}</p>
-        ):""}
+        ) : (
+          ""
+        )}
       </div>
       <div>
         <label className="text-black">
@@ -48,11 +58,15 @@ export default function AddProductPage() {
           <textarea
             className="block w-full p-2 text-black border rounded"
             name="description"
+            defaultValue={product.description??""}
+
           />
         </label>
         {state.errors.description ? (
           <p className="text-red-500">{state.errors.description}</p>
-        ):""}
+        ) : (
+          ""
+        )}
       </div>
       {/* <SubmitButton /> */}
       <button
