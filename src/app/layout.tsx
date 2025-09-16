@@ -2,6 +2,14 @@ import { Metadata } from "next";
 import "./globals.css";
 import ErrorWrapper from "./error-wrapper";
 import { ThemeProvider } from "@/components/themeProvider";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 export const metadata: Metadata = {
   title: {
     default: "Layout Meta Title ",
@@ -16,12 +24,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <ThemeProvider>
-        <body className={`antialiased`}>
-          <ErrorWrapper>{children}</ErrorWrapper>
-        </body>
-      </ThemeProvider>
+    <html>
+      <ClerkProvider>
+        <ThemeProvider>
+          <body className={`antialiased`}>
+            <header className="flex justify-end items-center p-4 gap-4 h-16">
+            <SignedOut>
+              <SignInButton mode="modal"/>
+              <SignUpButton mode="modal">
+                <button className="bg-[#6c47ff] text-ceramic-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
+                  Sign Up
+                </button>
+              </SignUpButton>
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </header>
+            <ErrorWrapper>{children}</ErrorWrapper>
+          </body>
+        </ThemeProvider>
+      </ClerkProvider>
     </html>
   );
 }
