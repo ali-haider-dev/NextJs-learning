@@ -5,11 +5,13 @@ import { ThemeProvider } from "@/components/themeProvider";
 import {
   ClerkProvider,
   SignInButton,
+  SignOutButton,
   SignUpButton,
   SignedIn,
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+import Link from "next/link";
 export const metadata: Metadata = {
   title: {
     default: "Layout Meta Title ",
@@ -38,7 +40,9 @@ export default function RootLayout({
               </SignUpButton>
             </SignedOut>
             <SignedIn>
-              <UserButton />
+              {/* <UserButton /> */}
+              <Link href={'/user-profile'} className="border border-black px-4 py-1 bg-blue-500 rounded-xl">Profile</Link>
+              <SignOutButton />
             </SignedIn>
           </header>
             <ErrorWrapper>{children}</ErrorWrapper>
